@@ -1,4 +1,5 @@
 #include "Sub.h"
+#include "Quaternion.h"
 
 
 /*
@@ -57,10 +58,7 @@ void Sub::althold_run()
     {
         float target_yaw;
         Quaternion(
-            set_attitude_target_no_gps.packet.q[0],
-            set_attitude_target_no_gps.packet.q[1],
-            set_attitude_target_no_gps.packet.q[2],
-            set_attitude_target_no_gps.packet.q[3])
+            set_attitude_target_no_gps.packet.q )
             .to_euler(
                 target_roll,
                 target_pitch,
