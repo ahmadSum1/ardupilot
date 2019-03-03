@@ -104,4 +104,8 @@ Parameters.rst
 Parameters.wiki
 apm.pdef.xml
 parameters.edn
-
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
