@@ -39,6 +39,12 @@ public:
         q1(_q1), q2(_q2), q3(_q3), q4(_q4)
     {
     }
+    
+    // setting constructor
+    Quaternion(const float _q[4]) :
+        q1(_q[0]), q2(_q[1]), q3(_q[2]), q4(_q[3])
+    {
+    }
 
     // function call operator
     void operator()(const float _q1, const float _q2, const float _q3, const float _q4)
