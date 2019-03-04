@@ -584,7 +584,7 @@ float AC_AttitudeControl::input_shaping_angle(float error_angle, float input_tc,
     float desired_ang_vel = sqrt_controller(error_angle, 1.0f / MAX(input_tc, 0.01f), accel_max);
 
     // Acceleration is limited directly to smooth the beginning of the curve.
-    return input_shaping_ang_vel(target_ang_vel, desired_ang_vel, accel_max, dt);
+    return input_shaping_ang_vel(target_ang_vel, desired_ang_vel, accel_max);
 }
 
 
@@ -598,18 +598,6 @@ float AC_AttitudeControl::input_shaping_ang_vel(float target_ang_vel, float desi
         target_ang_vel = desired_ang_vel;
     }
     return target_ang_vel;
-}
-
-// limits the acceleration and deceleration of a velocity request
-float AC_AttitudeControl::input_shaping_ang_vel(float target_ang_vel, float desired_ang_vel, float accel_max, float dt)
-{
-    // Acceleration is limited directly to smooth the beginning of the curve.
-    if (is_positive(accel_max)) {
-        float delta_ang_vel = accel_max * dt;
-        return constrain_float(desired_ang_vel, target_ang_vel-delta_ang_vel, target_ang_vel+delta_ang_vel);
-    } else {
-        return desired_ang_vel;
-    }
 }
 
 // limits angular velocity
