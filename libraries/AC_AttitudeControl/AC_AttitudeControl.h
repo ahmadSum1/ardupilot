@@ -228,6 +228,10 @@ public:
     // deceleration limits including basic jerk limiting using smoothing_gain
     float input_shaping_angle(float error_angle, float smoothing_gain, float accel_max, float target_ang_vel);
 
+    // calculates the velocity correction from an angle error. The angular velocity has acceleration and
+    // deceleration limits including basic jerk limiting using smoothing_gain
+    static float input_shaping_angle(float error_angle, float smoothing_gain, float accel_max, float target_ang_vel, float dt);
+
     // limits the acceleration and deceleration of a velocity request
     float input_shaping_ang_vel(float target_ang_vel, float desired_ang_vel, float accel_max);
 
