@@ -600,6 +600,29 @@ float AC_AttitudeControl::input_shaping_ang_vel(float target_ang_vel, float desi
     return target_ang_vel;
 }
 
+// limits angular velocity
+void AC_AttitudeControl::ang_vel_limit(Vector3f& euler_rad, float ang_vel_roll_max, float ang_vel_pitch_max, float ang_vel_yaw_max) const
+{
+    if (is_zero(ang_vel_roll_max) || is_zero(ang_vel_pitch_max)) {
+        if (!is_zero(ang_vel_roll_max)) {
+            euler_rad.x = constrain_float(euler_rad.x, -ang_vel_roll_max, ang_vel_roll_max);
+        }
+        if (!is_zero(ang_vel_pitch_max)) {
+            euler_rad.y = constrain_float(euler_rad.y, -ang_vel_pitch_max, ang_vel_pitch_max);
+        }
+    } else {
+        Vector2f thrust_vector_ang_vel(euler_rad.x/ang_vel_roll_max, euler_rad.y/ang_vel_pitch_max);
+        float thrust_vector_length = thrust_vector_ang_vel.length();
+        if (thrust_vector_length > 1.0f) {
+            euler_rad.x = thrust_vector_ang_vel.x * ang_vel_roll_max / thrust_vector_length;
+            euler_rad.y = thrust_vector_ang_vel.y * ang_vel_pitch_max / thrust_vector_length;
+        }
+    }
+    if (!is_zero(ang_vel_yaw_max)) {
+        euler_rad.z = constrain_float(euler_rad.z, -ang_vel_yaw_max, ang_vel_yaw_max);
+    }
+}
+
 // translates body frame acceleration limits to the euler axis
 Vector3f AC_AttitudeControl::euler_accel_limit(Vector3f euler_rad, Vector3f euler_accel)
 {

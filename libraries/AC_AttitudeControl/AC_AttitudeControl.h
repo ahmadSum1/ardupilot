@@ -236,6 +236,9 @@ public:
     float input_shaping_ang_vel(float target_ang_vel, float desired_ang_vel, float accel_max);
 
     // translates body frame acceleration limits to the euler axis
+    void ang_vel_limit(Vector3f& euler_rad, float ang_vel_roll_max, float ang_vel_pitch_max, float ang_vel_yaw_max) const;
+
+    // translates body frame acceleration limits to the euler axis
     Vector3f euler_accel_limit(Vector3f euler_rad, Vector3f euler_accel);
 
     // thrust_heading_rotation_angles - calculates two ordered rotations to move the att_from_quat quaternion to the att_to_quat quaternion.
