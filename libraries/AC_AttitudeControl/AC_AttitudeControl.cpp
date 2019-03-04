@@ -2,6 +2,14 @@
 #include <AP_HAL/AP_HAL.h>
 #include <AP_Math/AP_Math.h>
 
+#if APM_BUILD_TYPE(APM_BUILD_ArduPlane)
+ // default gains for Plane
+ # define AC_ATTITUDE_CONTROL_INPUT_TC_DEFAULT  0.2f    // Soft
+#else
+ // default gains for Copter and Sub
+ # define AC_ATTITUDE_CONTROL_INPUT_TC_DEFAULT  0.15f   // Medium
+#endif
+
 // table of user settable parameters
 const AP_Param::GroupInfo AC_AttitudeControl::var_info[] = {
 
@@ -94,6 +102,46 @@ const AP_Param::GroupInfo AC_AttitudeControl::var_info[] = {
     // @Range: 0.5 10.0
     // @User: Advanced
     AP_GROUPINFO("ANG_LIM_TC", 16, AC_AttitudeControl, _angle_limit_tc, AC_ATTITUDE_CONTROL_ANGLE_LIMIT_TC_DEFAULT),
+
+    // @Param: RATE_R_MAX
+    // @DisplayName: Angular Velocity Max for Roll
+    // @Description: Maximum angular velocity in roll axis
+    // @Units: deg/s
+    // @Range: 0 1080
+    // @Increment: 1
+    // @Values: 0:Disabled, 360:Slow, 720:Medium, 1080:Fast
+    // @User: Advanced
+    AP_GROUPINFO("RATE_R_MAX", 17, AC_AttitudeControl, _ang_vel_roll_max, 0.0f),
+
+    // @Param: RATE_P_MAX
+    // @DisplayName: Angular Velocity Max for Pitch
+    // @Description: Maximum angular velocity in pitch axis
+    // @Units: deg/s
+    // @Range: 0 1080
+    // @Increment: 1
+    // @Values: 0:Disabled, 360:Slow, 720:Medium, 1080:Fast
+    // @User: Advanced
+    AP_GROUPINFO("RATE_P_MAX", 18, AC_AttitudeControl, _ang_vel_pitch_max, 0.0f),
+
+    // @Param: RATE_Y_MAX
+    // @DisplayName: Angular Velocity Max for Yaw
+    // @Description: Maximum angular velocity in yaw axis
+    // @Units: deg/s
+    // @Range: 0 1080
+    // @Increment: 1
+    // @Values: 0:Disabled, 360:Slow, 720:Medium, 1080:Fast
+    // @User: Advanced
+    AP_GROUPINFO("RATE_Y_MAX", 19, AC_AttitudeControl, _ang_vel_yaw_max, 0.0f),
+
+    // @Param: INPUT_TC
+    // @DisplayName: Attitude control input time constant (aka smoothing)
+    // @Description: Attitude control input time constant.  Low numbers lead to sharper response, higher numbers to softer response
+    // @Units: s
+    // @Range: 0 1
+    // @Increment: 0.01
+    // @Values: 0.5:Very Soft, 0.2:Soft, 0.15:Medium, 0.1:Crisp, 0.05:Very Crisp
+    // @User: Standard
+    AP_GROUPINFO("INPUT_TC", 20, AC_AttitudeControl, _input_tc, AC_ATTITUDE_CONTROL_INPUT_TC_DEFAULT),
 
     AP_GROUPEND
 };

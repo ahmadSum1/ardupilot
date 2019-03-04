@@ -101,6 +101,9 @@ public:
     // Sets and saves the yaw acceleration limit in centidegrees/s/s
     void save_accel_yaw_max(float accel_yaw_max) { _accel_yaw_max = accel_yaw_max; _accel_yaw_max.save(); }
 
+    // set the rate control input smoothing time constant
+    void set_input_tc(float input_tc) { _input_tc = constrain_float(input_tc, 0.0f, 1.0f); }
+
     // Ensure attitude controller have zero errors to relax rate controller output
     void relax_attitude_controllers();
 
@@ -323,6 +326,9 @@ protected:
 
     // Angle limit time constant (to maintain altitude)
     AP_Float            _angle_limit_tc;
+
+    // rate controller input smoothing time constant
+    AP_Float            _input_tc;
 
     // Intersampling period in seconds
     float               _dt;
