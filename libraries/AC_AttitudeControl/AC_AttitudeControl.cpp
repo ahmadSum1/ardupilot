@@ -566,6 +566,18 @@ float AC_AttitudeControl::input_shaping_angle(float error_angle, float smoothing
     }
 }
 
+// calculates the velocity correction from an angle error. The angular velocity has acceleration and
+// deceleration limits including basic jerk limiting using _input_tc
+float AC_AttitudeControl::input_shaping_angle(float error_angle, float input_tc, float accel_max, float target_ang_vel, float dt)
+{
+    // Calculate the velocity as error approaches zero with acceleration limited by accel_max_radss
+    float desired_ang_vel = sqrt_controller(error_angle, 1.0f / MAX(input_tc, 0.01f), accel_max, dt);
+
+    // Acceleration is limited directly to smooth the beginning of the curve.
+    return input_shaping_ang_vel(target_ang_vel, desired_ang_vel, accel_max, dt);
+}
+
+
 // limits the acceleration and deceleration of a velocity request
 float AC_AttitudeControl::input_shaping_ang_vel(float target_ang_vel, float desired_ang_vel, float accel_max)
 {
