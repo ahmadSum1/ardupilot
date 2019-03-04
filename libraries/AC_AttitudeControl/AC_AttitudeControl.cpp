@@ -600,6 +600,18 @@ float AC_AttitudeControl::input_shaping_ang_vel(float target_ang_vel, float desi
     return target_ang_vel;
 }
 
+// limits the acceleration and deceleration of a velocity request
+float AC_AttitudeControl::input_shaping_ang_vel(float target_ang_vel, float desired_ang_vel, float accel_max, float dt)
+{
+    // Acceleration is limited directly to smooth the beginning of the curve.
+    if (is_positive(accel_max)) {
+        float delta_ang_vel = accel_max * dt;
+        return constrain_float(desired_ang_vel, target_ang_vel-delta_ang_vel, target_ang_vel+delta_ang_vel);
+    } else {
+        return desired_ang_vel;
+    }
+}
+
 // limits angular velocity
 void AC_AttitudeControl::ang_vel_limit(Vector3f& euler_rad, float ang_vel_roll_max, float ang_vel_pitch_max, float ang_vel_yaw_max) const
 {
