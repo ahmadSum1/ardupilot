@@ -308,6 +308,11 @@ protected:
     // Maximum rate the yaw target can be updated in Loiter, RTL, Auto flight modes
     AP_Float            _slew_yaw;
 
+    // Maximum angular velocity (in degrees/second) for earth-frame roll, pitch and yaw axis
+    AP_Float            _ang_vel_roll_max;
+    AP_Float            _ang_vel_pitch_max;
+    AP_Float            _ang_vel_yaw_max;
+
     // Maximum rotation acceleration for earth-frame roll axis
     AP_Float            _accel_roll_max;
 
