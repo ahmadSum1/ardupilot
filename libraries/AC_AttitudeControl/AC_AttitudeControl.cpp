@@ -103,6 +103,16 @@ const AP_Param::GroupInfo AC_AttitudeControl::var_info[] = {
     // @User: Advanced
     AP_GROUPINFO("ANG_LIM_TC", 16, AC_AttitudeControl, _angle_limit_tc, AC_ATTITUDE_CONTROL_ANGLE_LIMIT_TC_DEFAULT),
 
+    // @Param: RATE_R_MAX
+    // @DisplayName: Angular Velocity Max for Roll
+    // @Description: Maximum angular velocity in roll axis
+    // @Units: deg/s
+    // @Range: 0 1080
+    // @Increment: 1
+    // @Values: 0:Disabled, 360:Slow, 720:Medium, 1080:Fast
+    // @User: Advanced
+    AP_GROUPINFO("RATE_R_MAX", 17, AC_AttitudeControl, _ang_vel_roll_max, 0.0f),
+
     // @Param: INPUT_TC
     // @DisplayName: Attitude control input time constant (aka smoothing)
     // @Description: Attitude control input time constant.  Low numbers lead to sharper response, higher numbers to softer response
